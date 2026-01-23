@@ -1,0 +1,12 @@
+# Scuttle Development - robots.txt
+# https://scuttle.dev
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://scuttle.dev/sitemap.xml
+
+# Disallow admin/dev paths if any
+Disallow: /src/
+Disallow: /.git/
