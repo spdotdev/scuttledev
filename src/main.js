@@ -154,3 +154,34 @@ if (canvas) {
     createNodes();
   });
 }
+
+// ===== QR Modal Logic =====
+const qrModal = document.getElementById('qr-modal');
+const openQrBtn = document.getElementById('open-qr-modal');
+const closeQrBtn = document.getElementById('close-qr-modal');
+const qrOverlay = document.getElementById('qr-modal-overlay');
+
+if (qrModal && openQrBtn && closeQrBtn && qrOverlay) {
+  const openModal = () => {
+    qrModal.classList.add('active');
+    qrModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
+  };
+
+  const closeModal = () => {
+    qrModal.classList.remove('active');
+    qrModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = ''; // Restore scrolling
+  };
+
+  openQrBtn.addEventListener('click', openModal);
+  closeQrBtn.addEventListener('click', closeModal);
+  qrOverlay.addEventListener('click', closeModal);
+
+  // Close on Escape key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && qrModal.classList.contains('active')) {
+      closeModal();
+    }
+  });
+}

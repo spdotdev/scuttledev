@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Scuttle Development
+ORG:Scuttle Development
+TEL;TYPE=WORK,VOICE:+31618233175
+EMAIL;TYPE=PREF,INTERNET:info@scuttle.dev
+ADR;TYPE=WORK:;;Dirigentplein 144;Eindhoven;;5642 RK;The Netherlands
+URL:https://scuttle.dev
+END:VCARD
