@@ -606,22 +606,10 @@ nav a.active {
   max-width: 1400px;
   margin: 0 auto;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 2rem;
   font-size: 0.85rem;
   color: var(--text-main);
-}
-
-.sticky-footer-main {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.sticky-footer-utils {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
 }
 
 .sticky-footer-content a {
@@ -631,6 +619,11 @@ nav a.active {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+}
+
+/* Push the "Back to Top" link to the far right on desktop */
+.footer-top {
+  margin-left: auto;
 }
 
 .footer-icon {
@@ -662,12 +655,51 @@ nav a.active {
     grid-template-columns: 1fr;
   }
 
-  .sticky-footer-content,
-  .sticky-footer-main,
-  .sticky-footer-utils {
-    flex-direction: column;
-    gap: 0.5rem;
-    text-align: center;
+  /* Mobile Footer: 2x2 Grid */
+  .sticky-footer-content {
+    display: grid;
+    grid-template-areas:
+      "email phone"
+      "copy top";
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 1rem;
+    padding-bottom: 0.25rem;
+    /* Slight padding for safety */
+  }
+
+  .footer-email {
+    grid-area: email;
+    justify-self: start;
+    justify-content: flex-start;
+  }
+
+  .footer-phone {
+    grid-area: phone;
+    justify-self: end;
+    justify-content: flex-end;
+    text-align: right;
+  }
+
+  .footer-copy {
+    grid-area: copy;
+    font-size: 0.75rem;
+    align-self: center;
+    justify-self: start;
+    opacity: 0.8;
+  }
+
+  .footer-top {
+    grid-area: top;
+    margin-left: 0;
+    justify-self: end;
+  }
+
+  /* Ensure icons don't break layout */
+  .sticky-footer-content a {
+    font-size: 0.8rem;
+    width: 100%;
+    /* allows text-align to work if display is flex? no, inline-flex. */
+    width: auto;
   }
 }
 
