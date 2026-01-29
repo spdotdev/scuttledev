@@ -216,42 +216,23 @@ if (serviceModal && serviceModalBody && closeServiceBtn && serviceOverlay) {
   };
 
   serviceLinks.forEach(link => {
-    link.addEventListener('click', async (e) => {
+    link.addEventListener('click', (e) => {
       const href = link.getAttribute('href');
-      // Only intercept internal service pages, not external or section anchors
-      if (href.startsWith('/services/')) {
-        e.preventDefault();
-        try {
-          const response = await fetch(href);
-          const html = await response.text();
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, 'text/html');
-          const content = doc.querySelector('main').innerHTML;
+      let templateId = '';
 
-          // Clean up content: remove the padding-top if it exists in the fetched main
-          const tempDiv = document.createElement('div');
-          tempDiv.innerHTML = content;
-          const mainSection = tempDiv.querySelector('.services');
-          if (mainSection) {
-            // Remove the "Back to Services" link inside the modal since we have a close button
-            const backLink = mainSection.querySelector('.pillar-link');
-            if (backLink && backLink.textContent.includes('Back to Services')) {
-              backLink.parentElement.remove();
-            }
+      if (href.includes('strategic-solution-architecture')) {
+        templateId = 'service-template-architecture';
+      } else if (href.includes('application-modernization')) {
+        templateId = 'service-template-modernization';
+      } else if (href.includes('offensive-defensive-security')) {
+        templateId = 'service-template-security';
+      }
 
-            // Also remove "Get in Touch" CTA button from the modal
-            const ctaBtn = mainSection.querySelector('.cta-button');
-            if (ctaBtn && ctaBtn.textContent.includes('Get in Touch')) {
-              ctaBtn.parentElement.remove();
-            }
-
-            openServiceModal(mainSection.innerHTML);
-          } else {
-            openServiceModal(content);
-          }
-        } catch (error) {
-          console.error('Error fetching service content:', error);
-          window.location.href = href; // Fallback to normal navigation
+      if (templateId) {
+        const template = document.getElementById(templateId);
+        if (template) {
+          e.preventDefault();
+          openServiceModal(template.innerHTML);
         }
       }
     });
