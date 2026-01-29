@@ -2,7 +2,11 @@
 
 Professional landing page for Scuttle Development.
 
+- <https://spdotdev.github.io/scuttledev/>
+- <https://scuttle.dev>
+
 ## Features
+
 - **Modern Design**: Sleek, responsive interface with glassmorphism effects and smooth gradients.
 - **Dark/Light Mode**: Fully functional theme toggle with persistence.
 - **Responsive**: Adapts to all screen sizes.
