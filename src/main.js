@@ -185,3 +185,84 @@ if (qrModal && openQrBtn && closeQrBtn && qrOverlay) {
     }
   });
 }
+
+// ===== Service Modal Logic =====
+const serviceModal = document.getElementById('service-modal');
+const serviceModalBody = document.getElementById('service-modal-body');
+const closeServiceBtn = document.getElementById('close-service-modal');
+const serviceOverlay = document.getElementById('service-modal-overlay');
+const serviceLinks = document.querySelectorAll('.pillar-link');
+
+if (serviceModal && serviceModalBody && closeServiceBtn && serviceOverlay) {
+  const openServiceModal = (content) => {
+    serviceModalBody.innerHTML = content;
+    serviceModal.classList.add('active');
+    serviceModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Re-bind any internal links if necessary
+    const internalLinks = serviceModalBody.querySelectorAll('a[href^="/#"]');
+    internalLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        closeServiceModal();
+      });
+    });
+  };
+
+  const closeServiceModal = () => {
+    serviceModal.classList.remove('active');
+    serviceModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  serviceLinks.forEach(link => {
+    link.addEventListener('click', async (e) => {
+      const href = link.getAttribute('href');
+      // Only intercept internal service pages, not external or section anchors
+      if (href.startsWith('/services/')) {
+        e.preventDefault();
+        try {
+          const response = await fetch(href);
+          const html = await response.text();
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const content = doc.querySelector('main').innerHTML;
+
+          // Clean up content: remove the padding-top if it exists in the fetched main
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = content;
+          const mainSection = tempDiv.querySelector('.services');
+          if (mainSection) {
+            // Remove the "Back to Services" link inside the modal since we have a close button
+            const backLink = mainSection.querySelector('.pillar-link');
+            if (backLink && backLink.textContent.includes('Back to Services')) {
+              backLink.parentElement.remove();
+            }
+
+            // Also remove "Get in Touch" CTA button from the modal
+            const ctaBtn = mainSection.querySelector('.cta-button');
+            if (ctaBtn && ctaBtn.textContent.includes('Get in Touch')) {
+              ctaBtn.parentElement.remove();
+            }
+
+            openServiceModal(mainSection.innerHTML);
+          } else {
+            openServiceModal(content);
+          }
+        } catch (error) {
+          console.error('Error fetching service content:', error);
+          window.location.href = href; // Fallback to normal navigation
+        }
+      }
+    });
+  });
+
+  closeServiceBtn.addEventListener('click', closeServiceModal);
+  serviceOverlay.addEventListener('click', closeServiceModal);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && serviceModal.classList.contains('active')) {
+      closeServiceModal();
+    }
+  });
+}
