@@ -372,6 +372,212 @@ nav a.active {
   font-size: 1.1rem;
 }
 
+/* Pillar Services Layout */
+.services-pillars {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.pillar-card {
+  flex: 1;
+  background: var(--bg-card);
+  padding: 3rem 2.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.pillar-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.pillar-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.pillar-card h3 {
+  font-size: 1.8rem;
+  line-height: 1.2;
+  margin: 0;
+  max-width: 80%;
+}
+
+.pillar-tagline {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-headline);
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+.pillar-description {
+  font-size: 1rem;
+  color: var(--text-main);
+  margin-bottom: 2rem;
+  line-height: 1.7;
+  flex-grow: 1;
+}
+
+.pillar-bullets {
+  list-style: none;
+  margin-bottom: 2.5rem;
+  padding: 0;
+}
+
+.pillar-bullets li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  line-height: 1.5;
+}
+
+.pillar-bullets li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.pillar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: gap 0.2s;
+}
+
+.pillar-link:hover {
+  gap: 0.75rem;
+}
+
+.pillar-link span {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+@media (max-width: 1024px) {
+  .services-pillars {
+    flex-direction: column;
+  }
+}
+
+/* Commitment Section */
+.commitment {
+  padding: 8rem 5%;
+  background: var(--bg-body);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.commitment-content {
+  max-width: 900px;
+  position: relative;
+}
+
+.commitment-content .quote-icon {
+  margin-bottom: 2rem;
+  opacity: 0.8;
+}
+
+.commitment-content blockquote {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 800;
+  color: var(--text-headline);
+  line-height: 1.2;
+  margin-bottom: 2.5rem;
+  font-style: italic;
+  letter-spacing: -0.02em;
+}
+
+.commitment-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.commitment-author {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-headline);
+}
+
+.commitment-position {
+  font-size: 0.9rem;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .commitment {
+    padding: 6rem 5%;
+  }
+
+  .commitment-content blockquote {
+    font-size: 1.75rem;
+  }
+}
+
+/* Philosophy Section */
+.philosophy {
+  padding: 6rem 5%;
+  background-color: var(--bg-body);
+}
+
+.philosophy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 3rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.p-card {
+  height: 100%;
+}
+
+.p-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+  color: var(--text-headline);
+}
+
+.p-card p {
+  font-size: 1.1rem;
+  color: var(--text-main);
+  line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+  .philosophy-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
 /* Footer */
 .minimal-footer {
   background-color: var(--bg-body);
