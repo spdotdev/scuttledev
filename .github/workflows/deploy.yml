@@ -35,10 +35,18 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
+      # Create tarball ourselves so .nojekyll is included (upload-pages-artifact excludes dotfiles)
+      - name: Create Pages artifact
+        run: |
+          tar --dereference --hard-dereference -cvf "$RUNNER_TEMP/artifact.tar" -C dist .
+          echo "Contents (first 25):"
+          tar -tvf "$RUNNER_TEMP/artifact.tar" | head -25
+
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          path: './dist'
+          name: github-pages
+          path: ${{ runner.temp }}/artifact.tar
 
       - name: Deploy to GitHub Pages
         id: deployment
