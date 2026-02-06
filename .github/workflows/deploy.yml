@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: 'main'
+    branches: ['main']
 
 permissions:
   contents: read
@@ -18,22 +18,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
-          cache: 'npm'
+          node-version: lts/*
+          cache: "npm"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build
         run: npm run build
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
 
       # Create tarball ourselves so .nojekyll is included (upload-pages-artifact excludes dotfiles)
       - name: Create Pages artifact
@@ -41,6 +38,9 @@ jobs:
           tar --dereference --hard-dereference -cvf "$RUNNER_TEMP/artifact.tar" -C dist .
           echo "Contents (first 25):"
           tar -tvf "$RUNNER_TEMP/artifact.tar" | head -25
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -51,5 +51,5 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          branch: gh-pages
+        # with:
+        #   branch: gh-pages
