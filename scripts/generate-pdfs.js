@@ -2,7 +2,10 @@ import { mdToPdf } from 'md-to-pdf';
 import { readdir, mkdir } from 'node:fs/promises';
 import { join, basename } from 'node:path';
 
-const DOCS_DIR = 'docs/terms_conditions/claude';
+const DOCS_DIRS = [
+  'docs/terms_conditions/claude',
+  'docs/nda/claude',
+];
 const OUTPUT_DIR = 'public/legal';
 
 const pdfOptions = {
@@ -16,9 +19,8 @@ const pdfOptions = {
       font-size: 11pt;
       line-height: 1.6;
       color: #1a1a1a;
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 2cm;
+      margin: 0;
+      padding: 0;
     }
     h1 {
       font-size: 20pt;
@@ -42,7 +44,7 @@ const pdfOptions = {
   `,
   pdf_options: {
     format: 'A4',
-    margin: { top: '20mm', bottom: '20mm', left: '20mm', right: '20mm' },
+    margin: { top: '15mm', bottom: '15mm', left: '18mm', right: '18mm' },
     printBackground: true,
   },
 };
@@ -50,27 +52,29 @@ const pdfOptions = {
 async function generate() {
   await mkdir(OUTPUT_DIR, { recursive: true });
 
-  const files = (await readdir(DOCS_DIR)).filter(f => f.endsWith('.md'));
+  for (const docsDir of DOCS_DIRS) {
+    const files = (await readdir(docsDir)).filter(f => f.endsWith('.md'));
 
-  if (files.length === 0) {
-    console.log('No markdown files found in', DOCS_DIR);
-    return;
-  }
+    if (files.length === 0) {
+      console.log('No markdown files found in', docsDir);
+      continue;
+    }
 
-  for (const file of files) {
-    const input = join(DOCS_DIR, file);
-    const outputName = basename(file, '.md') + '.pdf';
-    const output = join(OUTPUT_DIR, outputName);
+    for (const file of files) {
+      const input = join(docsDir, file);
+      const outputName = basename(file, '.md') + '.pdf';
+      const output = join(OUTPUT_DIR, outputName);
 
-    console.log(`Generating ${output}...`);
-    const pdf = await mdToPdf({ path: input }, pdfOptions);
+      console.log(`Generating ${output}...`);
+      const pdf = await mdToPdf({ path: input }, pdfOptions);
 
-    if (pdf?.content) {
-      const { writeFile } = await import('node:fs/promises');
-      await writeFile(output, pdf.content);
-      console.log(`  ✓ ${output}`);
-    } else {
-      console.error(`  ✗ Failed to generate ${output}`);
+      if (pdf?.content) {
+        const { writeFile } = await import('node:fs/promises');
+        await writeFile(output, pdf.content);
+        console.log(`  ✓ ${output}`);
+      } else {
+        console.error(`  ✗ Failed to generate ${output}`);
+      }
     }
   }
 
