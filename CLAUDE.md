@@ -20,6 +20,12 @@
 - `public/legal/` — generated PDFs served as static assets
 - Footer only links English T&C; Dutch versions exist as PDFs but aren't linked
 
+## Deploy
+- `.github/workflows/deploy.yml` — builds and deploys to GitHub Pages
+- Runs `npm ci` then `npm run build` (which generates PDFs + Vite build)
+- Deploys the `dist/` folder (not raw source)
+- After adding/removing deps, always run `npm install` to sync `package-lock.json` before pushing — `npm ci` in CI will fail if lockfile is out of sync
+
 ## Git
 - Push to `main` triggers GitHub Actions deploy
 - Repo: https://github.com/spdotdev/scuttledev.git
