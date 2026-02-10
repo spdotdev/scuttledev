@@ -572,6 +572,31 @@ nav a.active {
   letter-spacing: -0.02em;
 }
 
+.footer-legal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-legal-link {
+  color: var(--text-main);
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.footer-legal-link:hover {
+  opacity: 1;
+  color: var(--primary);
+}
+
+.footer-legal-sep {
+  opacity: 0.3;
+}
+
 .minimal-footer-meta {
   display: flex;
   justify-content: center;
